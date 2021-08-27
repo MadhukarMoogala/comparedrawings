@@ -38,14 +38,14 @@ let forgeOAuth = {
 };
 var forge_token;
 //connect websocket
-/*async function connect(onmessage) {
+async function connect(onmessage) {
   return new Promise((resolve, reject) => {
     const ws = new WebSocket("wss://websockets.forgedesignautomation.io");
     ws.onmessage = onmessage;
     ws.onopen = (e) => resolve(ws);
     ws.onerror = (e) => reject(e.data);
   });
-}*/
+}
 
 // wrap workitem in a websocket message.
 // Note:
@@ -103,7 +103,7 @@ async function prepareWorkItem() {
 }
 
 // handle Submit button click
-/*async function onSubmitHandler() {
+async function onSubmitHandler() {
   try {
     //get workitem content
 
@@ -126,18 +126,4 @@ async function prepareWorkItem() {
   } catch (e) {
     $("#workItem").val(`${e}\n`);
   }
-}*/
-ws = new WebSocket("wss://websockets.forgedesignautomation.io");
-ws.onmessage = (e) => {
-  printMessage(e.data);
-};
-ws.onerror = (e) => {
-  printMessage(e.data);
-};
-ws.onclose = (e) => {
-  ws = undefined;
-};
-function onSubmitHandler() {
-  const msg = generateMessage(workItem);
-  ws.send(msg);
 }
