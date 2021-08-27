@@ -1,87 +1,60 @@
 <!DOCTYPE html>
-<head>
-        <meta charset="UTF-8"/>
-        <title>WebSocket Example</title>
-        <link rel="shortcut icon" href="./favicon.ico">
-        <script src="./utils.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-        <script src="https://kit.fontawesome.com/2f447868ae.js" crossorigin="anonymous"></script>        
-        <script src="https://cdn.jsdelivr.net/npm/dropbox@10.7.0/dist/Dropbox-sdk.min.js" integrity="sha256-csYzKB6mSouEXDoYCi3Pu5JDcpjros9fZ7BJpqMXVnw=" crossorigin="anonymous"></script>              
-        <script src="./dropboxOAuth.js"></script>
-        <script src="./da.js"></script>
 
-</script>
+<head>
+	<meta charset="UTF-8" />
+	<title>WebSocket Example</title>
+	<link rel="shortcut icon" href="./favicon.ico">
+	<script src="./utils.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<script src="https://kit.fontawesome.com/2f447868ae.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/dropbox@10.7.0/dist/Dropbox-sdk.min.js" integrity="sha256-csYzKB6mSouEXDoYCi3Pu5JDcpjros9fZ7BJpqMXVnw=" crossorigin="anonymous"></script>
+	<script src="./dropboxOAuth.js"></script>
+	<script src="./da.js"></script>
+	</script>
 </head>
-<body  onload="forgeOAuth.logIn()">                
-    <div class="container">
-        <h1 class="title">
+
+<body onload="forgeOAuth.logIn()">
+	<div class="container">
+		<h1 class="title">
         Compare AutoCAD Drawings using Design Automation
         </h1>
-        <div class="tile is-ancestor">
-            <div class="tile is-4 is-vertical is-parent">
-                <div class="tile is-child box">
-                <!-- Top tile -->
-                <a href= "#" class="button">
-                    <img src="./img/autodesk_text.png"
-                        height="20">                
-                </a>
-                <textarea id="userInfo" class="textarea" placeholder="User Details" onclick="forgeOAuth.userInfo()"></textarea>
-                </div>
-                
-                <div class="tile is-child box">                                    
-                    <button onClick="doAuth()" class="button">
-                        <span class="icon"><img src="./img/dropbox.png" alt="dropbox-image"></span>
-                        <span class="content is-large">Dropbox Login</span> </button>
-                         <div class="icon-text">
-                            <span ><i class="fas fa-info-circle icon has-text-info"></i>Once authenticated, it will use the access token to list the files in your root directory</span>
-                        </div>                                             
-                </div>
-                <div class="tile is-child box">
-                    <nav class="level is-mobile">
-                        <div class="level-right">
-                          <button class="button is-info" onclick="refreshTree()">
-                            <span class="icon is-small">
+		<div class="tile is-ancestor">
+			<div class="tile is-4 is-vertical is-parent">
+				<div class="tile is-child box">
+					<!-- Top tile -->
+					<a href="#" class="button"> <img src="./img/autodesk_text.png" height="20"> </a>
+					<textarea id="userInfo" class="textarea" placeholder="User Details" onclick="forgeOAuth.userInfo()"></textarea>
+				</div>
+				<div class="tile is-child box">
+					<button onClick="doAuth()" class="button"> <span class="icon"><img src="./img/dropbox.png" alt="dropbox-image"></span> <span class="content is-large">Dropbox Login</span> </button>
+					<div class="icon-text"> <span><i class="fas fa-info-circle icon has-text-info"></i>Once authenticated, it will use the access token to list the files in your root directory</span> </div>
+				</div>
+				<div class="tile is-child box">
+					<nav class="level is-mobile">
+						<div class="level-right">
+							<button class="button is-info" onclick="refreshTree()"> <span class="icon is-small">
                               <i class="fas fa-tree"></i>                              
-                            </span>
-                        </button>                          
-                        </div>
-                    </nav>
-                 <div id="jstree"></div>
-                 <div id="jstree2" style="display: none;"></div>         
-                </div>
-                <div class="tile is-child box">
-                    <button class="button is-primary" onclick="prepareWorkItem()"><span class="icon"><i class="fas fa-tools"></i></span><span class="content is-large">Prepare Workitem</span>
-                    </button>
-                </div>
-                <div class="tile is-child box">
-                    <button class="button is-primary" onclick="onSubmitHandler()">
-                        <span class="icon"><i class="fas fa-bolt"></i></span>
-                        <span class="content is-large">Submit</span>
-                    </button>
-                </div>
-                
-            
-            </div>
-            <div class="tile is-parent">
-                <textarea id="workItem" class="tile is-child is-primary box">                 
-                </textarea>                                
-                
-              </div>           
-        </div>
-    </div>      
-        <main>
-        <h1>Vanilla JavaScript App</h1>
-        <p>Loading content from the API: <b id="name">...</b></p>
-        </main>
-    
-        <script>
-        (async function() {
-            const { text } = await( await fetch(`/api/message`)).json();
-            document.querySelector('#name').textContent = text;
-        }())
-        </script>
+                            </span> </button>
+						</div>
+					</nav>
+					<div id="jstree"></div>
+					<div id="jstree2" style="display: none;"></div>
+				</div>
+				<div class="tile is-child box">
+					<button class="button is-primary" onclick="prepareWorkItem()"><span class="icon"><i class="fas fa-tools"></i></span><span class="content is-large">Prepare Workitem</span> </button>
+				</div>
+				<div class="tile is-child box">
+					<button class="button is-primary" onclick="onSubmitHandler()"> <span class="icon"><i class="fas fa-bolt"></i></span> <span class="content is-large">Submit</span> </button>
+				</div>
+			</div>
+			<div class="tile is-parent">
+				<textarea id="workItem" class="tile is-child is-primary box"> </textarea>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>

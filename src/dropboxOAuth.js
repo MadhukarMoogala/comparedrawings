@@ -1,4 +1,4 @@
-var DROPBOX_REDIRECT_URI = "http://localhost:3000";
+var DROPBOX_REDIRECT_URI = "https://green-moss-0d6d06110.azurestaticapps.net";
 var DROPBOX_CLIENT_ID = "umsfw8gmr6iy9hd";
 var dbxAuth = new Dropbox.DropboxAuth({
   clientId: DROPBOX_CLIENT_ID,
