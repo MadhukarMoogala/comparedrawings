@@ -2,7 +2,7 @@
   "profiles": {
     "Utility": {
       "commandName": "Project",
-      "workingDirectory": "D:\\Work\\AU2021\\compareDwgs\\Utility"
+      "workingDirectory": "D:\\Work\\AU2021\\compareDwgs\\web\\Utility\\bin\\x64"
     }
   }
 }

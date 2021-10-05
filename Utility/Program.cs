@@ -4,6 +4,8 @@
     using Autodesk.Forge.DesignAutomation;
     using Autodesk.Forge.DesignAutomation.Model;
     using Das.WorkItemSigner;
+    using Dropbox.Api;
+    using Dropbox.Api.Files;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -19,6 +21,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+   
 
     /// <summary>
     /// Defines the <see cref="Specifications" />.
@@ -249,6 +252,16 @@
             }
         }
 
+        private static async Task<string> GetDropBoxUploadLinkAsync(IConfigurationRoot config)
+        {
+            var dbToken = config.GetSection("DropboxToken").Value;
+            var dbClient = new DropboxClient(dbToken);
+            var writeMode = new WriteMode();
+            var tempUploadLinkArg = new GetTemporaryUploadLinkArg(new CommitInfo("/result.dwg", writeMode.AsAdd, autorename: true, mute: false, strictConflict: false), duration: 3600);
+            var tempUploadLinkResult = await dbClient.Files.GetTemporaryUploadLinkAsync(tempUploadLinkArg);
+            return tempUploadLinkResult.Link;
+        }
+
         /// <summary>
         /// The Main.
         /// </summary>
@@ -267,7 +280,6 @@
                 .AddJsonFile("appsettings.user.json", false, true)
                 .Build();
             var forgeClientId = config.GetValue<String>("Forge:ClientId");
-
             var logger = new LoggerConfiguration()
            .WriteTo.Console()
            .CreateLogger();
@@ -312,14 +324,14 @@
 
 
 
-            //Step 7 Generate digital signature for the activityId
+            //Step 7: Generate digital signature for the activityId
 
             var signature = new WorkItemSignatures()
             {
                 ActivityId = signer.Sign(Specifications.FQActivityId)
             };
 
-            //Step 8: 
+            //Step 8:  Prepare Workitem
 
             var HostDrawing = new XrefTreeArgument
             {
@@ -331,7 +343,7 @@
             };
             var Result = new XrefTreeArgument
             {
-                Url = "https://content.dropboxapi.com/apitul/1/7mjCJzUCtFFHcQ",
+                Url = await GetDropBoxUploadLinkAsync(config),
                 Verb = Verb.Post,
                 Headers = new Dictionary<string, string>()
                     {

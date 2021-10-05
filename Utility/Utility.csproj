@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Autodesk.Forge.DesignAutomation" Version="4.2.0" />
     <PackageReference Include="Autodesk.Forge.DesignAutomation.WorkItemSigner" Version="1.0.0" />
+    <PackageReference Include="Dropbox.Api" Version="6.15.0" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
