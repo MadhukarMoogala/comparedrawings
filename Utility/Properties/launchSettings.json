@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Utility": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\Work\\AU2021\\compareDwgs\\Utility"
+    }
+  }
+}
